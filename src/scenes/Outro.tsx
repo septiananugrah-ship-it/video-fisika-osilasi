@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Img, staticFile} from 'remotion';
 import {EASE_IN_OUT, cyc, ramp, rand} from '../anim';
 import {Glow, Motes, Spark, Stage, Twinkles} from '../components/primitives';
+import {SpringV} from '../components/physics';
 import {BRAND} from '../brand';
 import {useScene} from '../SceneContext';
 import {C, FONT, type Hue} from '../theme';
@@ -15,12 +16,12 @@ const REFS = [
   'RPS Fisika Umum S1 Kimia UNESA (osilasi dan getaran)',
 ];
 
-// butir yang mengorbit logo (warna = kode warna osilasi: x, v, F, Us, K, panas)
+// butir yang mengorbit logo (warna = kode warna osilasi: Us, v, F, x, K, redaman/panas)
 const ORBIT: {hue: Hue; ph: number}[] = [
   {hue: 'spr', ph: 0},
   {hue: 'cyan', ph: 1.05},
   {hue: 'force', ph: 2.09},
-  {hue: 'work', ph: 3.14},
+  {hue: 'press', ph: 3.14},
   {hue: 'kin', ph: 4.19},
   {hue: 'heat', ph: 5.24},
 ];
@@ -34,65 +35,82 @@ const orbitPt = (a: number): [number, number] => {
   return [OC.x + ex * c - ey * s, OC.y + ex * s + ey * c];
 };
 
-/** Ayunan Newton kecil: n bola di ujung terayun, momentum (panah ungu) "menembus" bola tengah ke ujung seberang. */
-const Cradle: React.FC<{x: number; y: number; t: number; out: number; phase: number; opacity: number}> = ({x, y, t, out, phase, opacity}) => {
+/** Motif kiri: dua bandul (panjang berbeda → periode berbeda, T ∝ √L) dengan jejak busur. */
+const Pendulums: React.FC<{x: number; y: number; t: number; opacity: number}> = ({x, y, t, opacity}) => {
   if (opacity <= 0.001) return null;
-  const N = 5;
-  const R = 17;
-  const L = 120;
-  const top = y - 196;
-  const th0 = 0.5;
-  const w = (2 * Math.PI) / 1.9;
-  const s = Math.sin(w * t + phase);
-  const c = Math.cos(w * t + phase);
-  const A = th0 * s;
-  const cx0 = x + 120 - ((N - 1) * R * 2) / 2;
-  const balls = Array.from({length: N}, (_, i) => {
-    const a = i < out ? Math.min(0, A) : i >= N - out ? Math.max(0, A) : 0;
-    const px = cx0 + i * 2 * R;
-    return {px, a, bx: px + L * Math.sin(a), by: top + L * Math.cos(a)};
-  });
-  // panah momentum bersilang-pudar di sekitar tumbukan (|A| kecil) — momentum berpindah lewat bola tengah
-  const kR = Math.max(0, Math.min(1, 0.5 + A / (0.7 * th0)));
-  const vLen = 46 * Math.abs(c);
-  const dir = Math.sign(c) || 1;
-  const hit = Math.exp(-((A / (0.12 * th0)) ** 2));
-  const grp = (right: boolean) => {
-    const idx = right ? N - 1 - (out - 1) / 2 : (out - 1) / 2;
-    const lo = Math.floor(idx);
-    const hi = Math.ceil(idx);
-    const b = {bx: (balls[lo].bx + balls[hi].bx) / 2, by: (balls[lo].by + balls[hi].by) / 2};
-    return b;
-  };
-  const gl = grp(false);
-  const gr = grp(true);
+  const top = y - 200;
+  const items = [
+    {px: x + 80, L: 150, T: 1.9, col: C.press, hue: 'press' as Hue, ph: 0},
+    {px: x + 170, L: 100, T: 1.9 * Math.sqrt(100 / 150), col: C.gold, hue: 'gold' as Hue, ph: 1.2},
+  ];
   return (
     <g opacity={opacity}>
-      <Glow x={x + 120} y={y - 90} r={150} color="spr" opacity={0.45} />
-      <line x1={x + 4} y1={y} x2={x + 26} y2={top - 6} stroke="#5b6a9e" strokeWidth={5} strokeLinecap="round" />
-      <line x1={x + 236} y1={y} x2={x + 214} y2={top - 6} stroke="#5b6a9e" strokeWidth={5} strokeLinecap="round" />
-      <rect x={x + 16} y={top - 10} width={208} height={9} rx={4} fill="#8fa0d0" />
-      <rect x={x - 6} y={y - 4} width={252} height={10} rx={4} fill="#26305a" stroke="#5b6a9e" strokeWidth={2} />
-      {balls.map((b, i) => (
-        <g key={i}>
-          <line x1={b.px} y1={top} x2={b.bx} y2={b.by} stroke="#c9d2ee" strokeWidth={1.5} opacity={0.8} />
-          <ellipse cx={b.bx} cy={y - 8} rx={R * 0.9} ry={3} fill="#000" opacity={0.3} />
-          <circle cx={b.bx} cy={b.by} r={R} fill="url(#ball)" stroke="#dfe6fb" strokeOpacity={0.6} strokeWidth={1.5} />
-          <circle cx={b.bx - R * 0.35} cy={b.by - R * 0.38} r={R * 0.24} fill="#fff" opacity={0.6} />
-          {i >= out && i < N - out ? <circle cx={b.bx} cy={b.by} r={R * 1.5} fill="url(#soft-spr)" opacity={hit} /> : null}
-        </g>
-      ))}
-      {vLen > 3 ? (
-        <>
-          <line x1={gl.bx} y1={gl.by - R - 16} x2={gl.bx + dir * vLen} y2={gl.by - R - 16} stroke={C.spr} strokeWidth={4} strokeLinecap="round" markerEnd="url(#arrow-spr)" opacity={1 - kR} />
-          <line x1={gr.bx} y1={gr.by - R - 16} x2={gr.bx + dir * vLen} y2={gr.by - R - 16} stroke={C.spr} strokeWidth={4} strokeLinecap="round" markerEnd="url(#arrow-spr)" opacity={kR} />
-        </>
-      ) : null}
+      <Glow x={x + 125} y={y - 100} r={150} color="press" opacity={0.35} />
+      <line x1={x + 10} y1={y} x2={x + 30} y2={top - 6} stroke="#5b6a9e" strokeWidth={5} strokeLinecap="round" />
+      <line x1={x + 240} y1={y} x2={x + 220} y2={top - 6} stroke="#5b6a9e" strokeWidth={5} strokeLinecap="round" />
+      <rect x={x + 20} y={top - 10} width={210} height={9} rx={4} fill="#8fa0d0" />
+      <rect x={x - 6} y={y - 4} width={262} height={10} rx={4} fill="#26305a" stroke="#5b6a9e" strokeWidth={2} />
+      {items.map((it) => {
+        const th0 = 0.42;
+        const th = th0 * Math.cos((2 * Math.PI * t) / it.T + it.ph);
+        const bx = it.px + it.L * Math.sin(th);
+        const by = top + it.L * Math.cos(th);
+        const arc: string[] = [];
+        for (let i = 0; i <= 16; i++) {
+          const a = -th0 + (2 * th0 * i) / 16;
+          arc.push(`${(it.px + it.L * Math.sin(a)).toFixed(1)},${(top + it.L * Math.cos(a)).toFixed(1)}`);
+        }
+        const trail = [1, 2, 3, 4].map((k): [number, number] => {
+          const a = th0 * Math.cos((2 * Math.PI * (t - k * 0.04)) / it.T + it.ph);
+          return [it.px + it.L * Math.sin(a), top + it.L * Math.cos(a)];
+        });
+        return (
+          <g key={it.L}>
+            <polyline points={arc.join(' ')} fill="none" stroke={it.col} strokeWidth={1.5} strokeDasharray="3 6" opacity={0.45} />
+            <line x1={it.px} y1={top} x2={bx} y2={by} stroke="#c9d2ee" strokeWidth={2} opacity={0.85} />
+            <ellipse cx={bx} cy={y - 8} rx={14} ry={3} fill="#000" opacity={0.3} />
+            <Spark x={bx} y={by} r={11} color={it.hue} trail={trail} />
+          </g>
+        );
+      })}
     </g>
   );
 };
 
-/** Penutup: logo SCIENTIAN, tagline, nama penyusun, rujukan, dan pil penutup seri (motif tumbukan). */
+/** Motif kanan: pegas–balok tegak (x = A cos ωt) + molekul diatomik kecil yang bergetar (gerak lambat). */
+const SpringMol: React.FC<{x: number; y: number; t: number; opacity: number}> = ({x, y, t, opacity}) => {
+  if (opacity <= 0.001) return null;
+  const top = y - 200;
+  const w = 2 * Math.PI * 0.62;
+  const dx = 26 * Math.cos(w * t);
+  const by = top + 110 + dx;
+  const v = -26 * w * Math.sin(w * t);
+  const s = Math.sin(2 * Math.PI * 1.1 * t + 0.5);
+  const mx = x + 190;
+  const my = y - 70;
+  const a = mx - 34 - 6 * s;
+  const b = mx + 30 + 14 * s;
+  return (
+    <g opacity={opacity}>
+      <Glow x={x + 120} y={y - 100} r={150} color="spr" opacity={0.4} />
+      <rect x={x + 10} y={top - 10} width={130} height={9} rx={4} fill="#8fa0d0" />
+      <line x1={x + 20} y1={y} x2={x + 26} y2={top - 6} stroke="#5b6a9e" strokeWidth={5} strokeLinecap="round" />
+      <rect x={x - 6} y={y - 4} width={262} height={10} rx={4} fill="#26305a" stroke="#5b6a9e" strokeWidth={2} />
+      <SpringV x={x + 80} ya={top} yb={by - 30} coils={7} amp={14} width={3.5} color={C.spr} />
+      <rect x={x + 52} y={by - 30} width={56} height={52} rx={8} fill="url(#crate)" stroke={C.press} strokeWidth={2.5} />
+      <line x1={x + 116} y1={by - 4} x2={x + 116} y2={by - 4 + v * 0.35} stroke={C.cyan} strokeWidth={3} strokeLinecap="round" opacity={Math.min(1, Math.abs(v) / 25)} />
+      <line x1={x + 46} y1={top + 110} x2={x + 114} y2={top + 110} stroke={C.gold} strokeWidth={1.5} strokeDasharray="4 5" opacity={0.6} />
+      {/* molekul */}
+      <circle cx={(a + b) / 2} cy={my} r={60} fill="url(#soft-heat)" opacity={0.25 + 0.1 * s} />
+      <line x1={a} y1={my} x2={b} y2={my} stroke={C.spr} strokeWidth={4} strokeDasharray="5 4" />
+      <circle cx={a} cy={my} r={20} fill="#4fd68a" stroke="#c8ffe0" strokeWidth={2} />
+      <circle cx={b} cy={my} r={10} fill="#eef3ff" />
+      <circle cx={a - 6} cy={my - 7} r={5} fill="#fff" opacity={0.5} />
+    </g>
+  );
+};
+
+/** Penutup: logo SCIENTIAN, tagline, nama penyusun, rujukan, dan pil penutup seri (motif osilasi). */
 export const Outro: React.FC = () => {
   const {t, dur} = useScene();
   const logo = ramp(t, 0.2, 1.6);
@@ -125,25 +143,25 @@ export const Outro: React.FC = () => {
         <Glow x={960} y={240} r={440} color="cyan" opacity={0.35 * logo} />
         <Glow x={960} y={188} r={200} color="spr" opacity={0.3 * logo} />
         <Motes x={960} y={300} rx={620} ry={260} n={40} color="cyan" opacity={0.45 * logo} seed={13} />
-        {/* butir yang hanyut pelan (jejak gerak lurus beraturan) */}
+        {/* butir yang hanyut pelan sambil berosilasi (jejak sinus) */}
         {Array.from({length: 24}, (_, k) => {
           const p = ((((t + rand(k * 3.1) * 14) / (10 + 5 * rand(k))) % 1) + 1) % 1;
           const x = -40 + p * 2000;
           const base = 140 + rand(k * 5.3) * 780;
-          const y = base;
-          const tail = 18 + 20 * rand(k * 1.7);
-          const yb = base;
+          const amp = 8 + 10 * rand(k * 2.2);
+          const yAt = (xx: number) => base + amp * Math.sin(xx * 0.03 + k);
+          const tail = [1, 2, 3, 4, 5, 6].map((j) => `${(x - j * 6).toFixed(1)},${yAt(x - j * 6).toFixed(1)}`);
           return (
             <g key={k} opacity={cyc(p) * 0.4 * logo}>
-              <line x1={x - tail} y1={yb} x2={x} y2={y} stroke="#e6d4ff" strokeWidth={2} strokeLinecap="round" opacity={0.6} />
-              <circle cx={x} cy={y} r={2.4} fill="#fff" />
+              <polyline points={`${x.toFixed(1)},${yAt(x).toFixed(1)} ${tail.join(' ')}`} fill="none" stroke="#e6d4ff" strokeWidth={2} strokeLinecap="round" opacity={0.6} />
+              <circle cx={x} cy={yAt(x)} r={2.4} fill="#fff" />
             </g>
           );
         })}
         <path d={ellipseD} fill="none" stroke={C.cyan} strokeOpacity={0.18 * orbitOn} strokeWidth={1.5} strokeDasharray="4 10" strokeDashoffset={-t * 14} />
         {ring(false)}
-        <Cradle x={110} y={860} t={t} out={1} phase={0} opacity={0.8 * motif} />
-        <Cradle x={1570} y={860} t={t} out={2} phase={1.6} opacity={0.8 * motif} />
+        <Pendulums x={110} y={860} t={t} opacity={0.85 * motif} />
+        <SpringMol x={1560} y={860} t={t} opacity={0.85 * motif} />
         <Twinkles x={960} y={530} rx={360} ry={30} n={4} color="gold" opacity={by * 0.7} seed={17} />
       </Stage>
       <AbsoluteFill style={{alignItems: 'center', paddingTop: 70}}>
