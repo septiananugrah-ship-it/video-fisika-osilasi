@@ -1,0 +1,90 @@
+hook-00	Tarik sebuah pegas, lalu lepaskan. Ia bergerak bolak-balik, lagi dan lagi.
+hook-01	Sebuah bandul berayun dengan irama yang hampir tidak berubah, cukup teratur untuk menjadi jam.
+hook-02	Dan di dalam setiap molekul, atom-atom bergetar puluhan triliun kali setiap detik.
+hook-03	Pegas, bandul, dan molekul punya pola gerak yang sama:
+hook-04	osilasi.
+hook-05	Memahami osilasi adalah langkah pertama untuk memahami getaran molekul, cahaya inframerah, bahkan dunia kuantum.
+roadmap-00	Video ini membahas osilasi dalam tiga bagian.
+roadmap-01	Bagian pertama, konsep: gaya pemulih, gerak harmonik sederhana, periode, energi, bandul, redaman, dan resonansi.
+roadmap-02	Bagian kedua, osilasi di dunia kimia: molekul sebagai pegas, spektrum inframerah, efek isotop, dan jembatan ke kuantum.
+roadmap-03	Bagian ketiga, penerapan: jam, peredam kendaraan, dan peredam gedung pencakar langit.
+restoring-00	Setiap osilasi punya satu syarat: ada posisi setimbang, dan ada gaya yang selalu menarik benda kembali ke sana.
+restoring-01	Gaya ini disebut gaya pemulih.
+restoring-02	Pada pegas, gaya pemulih sebanding dengan simpangan: ef sama dengan minus ka eks. Inilah hukum Huk.
+restoring-03	Tanda minus berarti gaya selalu berlawanan arah dengan simpangan. Ditarik ke kanan, pegas menarik ke kiri.
+restoring-04	Tetapi saat benda tiba di titik setimbang, gayanya nol, sedangkan kecepatannya justru paling besar.
+restoring-05	Benda kebablasan melewati titik setimbang, lalu ditarik kembali dari sisi lain. Itulah sebabnya ia bolak-balik.
+shm-00	Bila gaya pemulih sebanding dengan simpangan, geraknya disebut gerak harmonik sederhana.
+shm-01	Bayangkan sebuah titik berputar beraturan pada lingkaran, lalu lihat bayangannya dari samping.
+shm-02	Bayangan itu bergerak bolak-balik persis seperti benda pada pegas.
+shm-03	Karena itu simpangannya mengikuti fungsi kosinus: eks sama dengan a kosinus omega te.
+shm-04	a adalah amplitudo, simpangan terjauh. Omega adalah frekuensi sudut, seberapa cepat titik itu berputar.
+shm-05	Satu putaran penuh sama dengan satu getaran penuh.
+period-00	Waktu untuk satu getaran penuh disebut periode, te. Banyaknya getaran per detik disebut frekuensi, ef, satu per te.
+period-01	Untuk pegas, omega sama dengan akar ka per em, sehingga periodenya dua pi akar em per ka.
+period-02	Pegas yang lebih kaku bergetar lebih cepat. Beban yang lebih berat bergetar lebih lambat.
+period-03	Beban setengah kilogram pada pegas lima puluh newton per meter: omega sepuluh radian per detik, periodenya sekitar nol koma enam tiga detik.
+period-04	Massanya dijadikan empat kali, periodenya hanya menjadi dua kali.
+period-05	Yang mengejutkan: periode tidak bergantung pada amplitudo. Ditarik jauh atau dekat, iramanya tetap sama.
+energy-00	Selama bergetar, energi terus berpindah bentuk.
+energy-01	Di simpangan terjauh, benda diam sesaat: semua energinya energi potensial pegas, setengah ka a kuadrat.
+energy-02	Di titik setimbang, pegas tidak teregang: semua energinya energi kinetik.
+energy-03	Dengan amplitudo sepuluh sentimeter, energi totalnya nol koma dua lima jul, dan kecepatan terbesarnya satu meter per detik.
+energy-04	Tanpa gesekan, energi total itu tetap. Yang berubah hanya pembagiannya.
+energy-05	Grafik energi potensialnya berbentuk mangkuk parabola, dan benda berayun di dalam mangkuk itu. Ingat mangkuk ini, kita akan bertemu lagi di dunia kuantum.
+pendulum-00	Bandul juga berosilasi. Gaya pemulihnya adalah komponen gravitasi yang menyinggung lintasan.
+pendulum-01	Untuk simpangan kecil, geraknya hampir harmonik sederhana, dengan periode dua pi akar el per ge.
+pendulum-02	Periode bandul tidak bergantung pada massa beban. Bola besi dan bola kayu berayun seirama.
+pendulum-03	Bandul sepanjang satu meter berayun dengan periode hampir tepat dua detik.
+pendulum-04	Konon Galileo memperhatikan lampu gantung gereja yang berayun, dan mengukur iramanya dengan denyut nadinya sendiri.
+pendulum-05	Tetapi bila simpangannya besar, periodenya mulai bertambah. Rumus sederhana itu hanya berlaku untuk ayunan kecil.
+damping-00	Di dunia nyata, ayunan tidak bergerak selamanya. Gesekan dan hambatan udara mengambil energinya sedikit demi sedikit.
+damping-01	Amplitudonya mengecil, menyusut secara eksponensial. Inilah osilasi teredam.
+damping-02	Bila redamannya kuat, benda kembali ke titik setimbang tanpa sempat bolak-balik.
+damping-03	Redaman yang paling pas, disebut redaman kritis, membawa benda kembali ke setimbang secepat mungkin tanpa kebablasan.
+resonance-00	Sekarang dorong osilator itu secara berkala. Ini disebut osilasi paksa.
+resonance-01	Setiap osilator punya frekuensi alami, irama yang ia sukai.
+resonance-02	Bila dorongan datang tepat pada frekuensi alami itu, setiap dorongan menambah energi, dan amplitudonya membesar terus. Inilah resonansi.
+resonance-03	Seperti mendorong anak di ayunan: dorongan kecil pada saat yang tepat membuat ayunan makin tinggi.
+resonance-04	Bila dorongannya tidak seirama, sebagian dorongan justru melawan, dan ayunan hampir tidak bergerak.
+resonance-05	Resonansi adalah cara paling efisien untuk memindahkan energi ke sebuah osilator. Ingat ini, karena molekul menyerap cahaya dengan cara yang sama.
+molecule-00	Ikatan kimia berperilaku seperti pegas. Dua atom punya jarak setimbang, dan ikatan menarik keduanya kembali bila diregangkan atau ditekan.
+molecule-01	Molekul hidrogen klorida bisa dibayangkan sebagai dua bola yang dihubungkan pegas.
+molecule-02	Karena kedua atom sama-sama bergerak, massanya diganti massa tereduksi: em satu kali em dua dibagi jumlahnya.
+molecule-03	Atom klor jauh lebih berat, jadi yang paling banyak bergerak adalah atom hidrogen.
+molecule-04	Dengan tetapan gaya ikatan sekitar lima ratus newton per meter, molekul ini bergetar hampir sembilan kali sepuluh pangkat tiga belas kali per detik.
+infrared-00	Frekuensi getaran molekul itu ternyata sama dengan frekuensi cahaya inframerah.
+infrared-01	Bila cahaya inframerah dengan frekuensi yang pas mengenai molekul, terjadilah resonansi: molekul menyerap energinya.
+infrared-02	Hidrogen klorida menyerap paling kuat di sekitar dua ribu delapan ratus delapan puluh enam per sentimeter, panjang gelombang sekitar tiga koma lima mikrometer.
+infrared-03	Setiap jenis ikatan punya tetapan gaya dan massa yang berbeda, jadi setiap ikatan menyerap pada frekuensinya sendiri.
+infrared-04	Itulah sebabnya spektrum inframerah bisa dipakai untuk mengenali gugus fungsi, seperti sidik jari molekul.
+isotope-00	Ganti atom hidrogen dengan deuterium, isotop yang massanya dua kali lebih besar.
+isotope-01	Ikatannya tetap sama, tetapan gayanya tidak berubah. Yang berubah hanya massanya.
+isotope-02	Massa tereduksi naik hampir dua kali, sehingga frekuensinya turun sekitar akar dua, kira-kira satu koma empat kali.
+isotope-03	Serapan deuterium klorida bergeser ke sekitar dua ribu sembilan puluh satu per sentimeter, persis seperti ramalan rumus pegas.
+isotope-04	Model pegas sederhana ini ternyata bekerja sampai ke skala molekul.
+quantum-00	Tetapi ada satu hal yang tidak bisa dijelaskan model pegas klasik.
+quantum-01	Pegas klasik boleh bergetar dengan energi berapa saja. Molekul tidak.
+quantum-02	Energi getaran molekul hanya boleh bernilai tertentu: fe ditambah setengah, dikali ha nu. Tingkat-tingkatnya berjarak sama, seperti anak tangga di dalam mangkuk parabola tadi.
+quantum-03	Bahkan pada tingkat paling rendah, molekul tidak pernah benar-benar diam. Ia masih menyimpan energi titik nol, setengah ha nu.
+quantum-04	Satu anak tangga getaran hidrogen klorida sekitar empat belas kali energi termal pada suhu kamar, jadi hampir semua molekul berada di tingkat paling bawah.
+quantum-05	Osilator harmonik inilah salah satu model terpenting dalam kimia kuantum. Dan semuanya dimulai dari pegas sederhana.
+clocks-00	Karena periodenya tidak bergantung pada amplitudo, osilator adalah pengukur waktu yang ideal.
+clocks-01	Jam bandul memakai ayunan bandul, dan mekanismenya memberi dorongan kecil setiap ayunan untuk mengganti energi yang hilang.
+clocks-02	Jam tangan modern memakai kristal kuarsa kecil berbentuk garpu tala yang bergetar tiga puluh dua ribu tujuh ratus enam puluh delapan kali per detik.
+clocks-03	Angka itu dua pangkat lima belas, sehingga rangkaian elektronik cukup membaginya dua sebanyak lima belas kali untuk mendapat tepat satu detik.
+absorber-00	Mobil bertumpu pada pegas agar guncangan jalan tidak langsung sampai ke penumpang.
+absorber-01	Tetapi pegas saja membuat mobil terus berayun naik-turun setelah melewati polisi tidur.
+absorber-02	Karena itu setiap pegas dipasangkan dengan peredam kejut berisi oli, yang mengubah energi ayunan menjadi panas.
+absorber-03	Peredam dirancang mendekati redaman kritis: mobil kembali datar dengan cepat, tanpa memantul berkali-kali.
+tower-00	Gedung tinggi juga punya frekuensi alami, dan angin kencang dapat membuatnya bergoyang.
+tower-01	Di puncak gedung Taipei seratus satu tergantung bola baja seberat sekitar enam ratus enam puluh ton.
+tower-02	Bandul raksasa ini disetel agar frekuensinya sama dengan frekuensi gedung.
+tower-03	Saat gedung bergoyang, bandul berayun berlawanan arah dan menyerap energi goyangan itu, lalu peredamnya mengubahnya menjadi panas.
+tower-04	Resonansi yang biasanya berbahaya justru dipakai untuk melawan dirinya sendiri.
+recap-00	Mari rangkum.
+recap-01	Osilasi terjadi bila ada gaya pemulih yang menarik benda kembali ke posisi setimbang.
+recap-02	Bila gaya itu sebanding dengan simpangan, geraknya harmonik sederhana, dengan periode yang tidak bergantung pada amplitudo.
+recap-03	Energi terus berpindah antara energi kinetik dan potensial. Redaman mengambilnya, resonansi menambahnya paling efisien.
+recap-04	Molekul bergetar seperti pegas, menyerap cahaya inframerah lewat resonansi, dan energi getarannya terkuantisasi.
+recap-05	Jadi, setiap kali melihat sesuatu bergetar, tanyakan: apa gaya pemulihnya, dan berapa frekuensi alaminya?
