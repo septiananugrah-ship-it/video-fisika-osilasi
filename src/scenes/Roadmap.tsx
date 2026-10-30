@@ -1,24 +1,25 @@
 import React from 'react';
 import {AbsoluteFill} from 'remotion';
-import {BACK, EASE_IN_OUT, ramp, rand, smoothPath, win} from '../anim';
+import {BACK, EASE_IN_OUT, ramp, smoothPath, win} from '../anim';
+import {Spring} from '../components/physics';
 import {Arrow, DrawPath, Glow, Motes, Ripple, Spark, Stage, Stream, pointAlong} from '../components/primitives';
 import {useScene} from '../SceneContext';
 import {C, FONT, type Hue} from '../theme';
 
 // Peta video: tiga kartu bagian dengan ikon yang terus bergerak (dihitung analitik):
-// (1) dua kereta bermassa sama bertumbukan lenting di rel (bertukar kecepatan, panah momentum berpindah),
-// (2) molekul gas memantul di dalam kotak (kilatan tekanan di dinding) + foton yang menabrak dinding,
-// (3) roket naik dengan gas buang (gas dihitung di kerangka lab) dan bintang yang mengalir turun;
-// dihubungkan oleh lintasan tempat sebutir cahaya ungu merambat.
+// (1) balok pada pegas: x = A cos ωt, panah x merah muda dan gaya pemulih kuning F = −kx (selalu berlawanan),
+// (2) molekul HCl bergetar mengitari pusat massa (gerak lambat) sambil menyerap gelombang inframerah,
+// (3) jam berdetak + gedung tinggi bergoyang dengan bandul peredam di puncaknya;
+// dihubungkan oleh lintasan tempat sebutir cahaya merambat.
 const PARTS = [
-  {n: '1', title: 'Konsep & cara berpikir', color: C.cyan, hue: 'cyan' as Hue, items: ['Momentum', 'Impuls', 'Kekekalan momentum', 'Jenis-jenis tumbukan', 'Koefisien restitusi']},
-  {n: '2', title: 'Momentum di dunia kimia', color: C.spr, hue: 'spr' as Hue, items: ['Tekanan gas', 'Teori tumbukan', 'Momentum cahaya']},
-  {n: '3', title: 'Penerapan', color: C.work, hue: 'work' as Hue, items: ['Keselamatan berkendara', 'Bandul balistik', 'Roket']},
+  {n: '1', title: 'Konsep osilasi', color: C.cyan, hue: 'cyan' as Hue, items: ['Gaya pemulih', 'Gerak harmonik sederhana', 'Periode & frekuensi', 'Energi osilasi', 'Bandul', 'Redaman', 'Resonansi']},
+  {n: '2', title: 'Osilasi di dunia kimia', color: C.spr, hue: 'spr' as Hue, items: ['Molekul sebagai pegas', 'Spektrum inframerah', 'Efek isotop', 'Jembatan ke kuantum']},
+  {n: '3', title: 'Penerapan', color: C.work, hue: 'work' as Hue, items: ['Jam: bandul → kuarsa', 'Peredam kendaraan', 'Peredam gedung tinggi']},
 ];
 const KEYS = [
-  ['momentum', 'impuls', 'kekekalan', 'jenis', 'restitusi'],
-  ['tekanan', 'teori', 'cahaya'],
-  ['keselamatan', 'bandul', 'roket'],
+  ['pemulih', 'harmonik', 'periode', 'energi', 'bandul', 'redaman', 'resonansi'],
+  ['pegas', 'inframerah', 'isotop', 'kuantum'],
+  ['jam', 'kendaraan', 'gedung'],
 ];
 const CX = [380, 960, 1540];
 const TOP = 196;
@@ -38,133 +39,100 @@ const PTS: [number, number][] = Array.from({length: 61}, (_, i) => {
 const PTS_D = smoothPath(PTS);
 const UX = CX.map((x) => (x - X0P) / (X1P - X0P));
 
-const tri = (raw: number, L: number) => {
-  const m = ((raw % (2 * L)) + 2 * L) % (2 * L);
-  return m <= L ? {u: m, s: 1} : {u: 2 * L - m, s: -1};
-};
-
 /** Ikon tiap bagian (SVG, selalu bergerak). */
 const Icon: React.FC<{i: number; x: number; y: number; t: number; act: number}> = ({i, x, y, t, act}) => {
   if (i === 0) {
-    // dua kereta bermassa sama di rel: tumbukan lenting = bertukar kecepatan (hantu bebas yang diurutkan)
-    const w = 76;
-    const x0 = x - 200;
-    const x1 = x + 200;
-    const L = x1 - x0 - 2 * w;
-    const yr = y + 40;
-    const g = [tri(30 + 150 * t, L), tri(L * 0.6, L)].map((q, k) => ({u: q.u, v: k === 0 ? 150 * q.s : 0}));
-    g.sort((a, b) => a.u - b.u);
-    const carts = g.map((q, k) => ({x: x0 + w / 2 + k * w + q.u, v: q.v}));
-    const gap = g[1].u - g[0].u;
-    const flash = Math.max(0, 1 - gap / 30) ** 2;
-    const wallL = Math.max(0, 1 - g[0].u / 26) ** 2;
-    const wallR = Math.max(0, 1 - (L - g[1].u) / 26) ** 2;
+    // balok pada pegas: x = A cos ωt (T = 1,6 dtk); F = −kx kuning, x merah muda
+    const A = 70;
+    const om = (2 * Math.PI) / 1.6;
+    const dx = A * Math.cos(om * t);
+    const eq = x + 30;
+    const bx = eq + dx;
+    const fl = y + 50;
+    const wl = x - 200;
     return (
       <g>
         <Glow x={x} y={y} r={170} color="cyan" opacity={0.25 + 0.3 * act} />
-        <rect x={x0 - 10} y={yr + 4} width={x1 - x0 + 20} height={12} rx={6} fill="#1a2550" stroke="#56628f" strokeWidth={1.5} />
-        {[x0 - 12, x1 + 12].map((bx, k) => (
-          <rect key={k} x={bx - 5} y={yr - 60} width={10} height={70} rx={4} fill="#56628f" />
-        ))}
-        <circle cx={x0} cy={yr - 28} r={34} fill="url(#soft-cyan)" opacity={wallL} />
-        <circle cx={x1} cy={yr - 28} r={34} fill="url(#soft-cyan)" opacity={wallR} />
-        {carts.map((c, k) => (
-          <g key={k} transform={`translate(${c.x} ${yr})`}>
-            <rect x={-w / 2 + 3} y={-56} width={w - 6} height={48} rx={9} fill="url(#crate)" stroke={k === 0 ? C.cyan : C.press} strokeWidth={2.5} />
-            {[-20, 20].map((wx) => (
-              <circle key={wx} cx={wx} cy={-6} r={7} fill="#0b1022" stroke={C.muted} strokeWidth={2} />
-            ))}
-            {Math.abs(c.v) > 1 ? <Arrow x1={0} y1={-80} x2={c.v * 0.55} y2={-80} color="spr" width={6} pulse={false} /> : null}
-          </g>
-        ))}
-        <circle cx={carts[0].x + w / 2} cy={yr - 32} r={44} fill="url(#soft-spr)" opacity={flash} />
+        <rect x={wl - 6} y={fl} width={430} height={34} fill="url(#ground)" />
+        <line x1={wl - 6} y1={fl} x2={x + 220} y2={fl} stroke="#7d89b5" strokeWidth={3} />
+        <rect x={wl - 22} y={y - 70} width={22} height={120} fill="#1a2550" stroke="#7d89b5" strokeWidth={2.5} />
+        <line x1={eq} y1={y - 80} x2={eq} y2={fl + 40} stroke={C.gold} strokeOpacity={0.5} strokeWidth={2} strokeDasharray="5 7" />
+        <Spring xa={wl} xb={bx - 40} y={y + 12} coils={8} amp={14} color={C.spr} width={4} />
+        <rect x={bx - 40} y={y - 26} width={80} height={76} rx={10} fill="url(#crate)" stroke={C.ink} strokeOpacity={0.6} strokeWidth={2.5} />
+        <Arrow x1={bx} y1={y - 50} x2={bx - 0.9 * dx} y2={y - 50} color="force" width={6} pulse={false} opacity={Math.min(1, Math.abs(dx) / 12)} />
+        <Arrow x1={eq} y1={fl + 24} x2={bx} y2={fl + 24} color="press" width={5} pulse={false} opacity={Math.min(1, Math.abs(dx) / 12)} />
       </g>
     );
   }
   if (i === 1) {
-    // molekul gas memantul di kotak; tiap pantulan dinding = Δp = 2mv → kilatan tekanan
-    const bx0 = x - 160;
-    const by0 = y - 70;
-    const W = 320;
-    const Hh = 190;
-    const mol = Array.from({length: 9}, (_, k) => {
-      const vx = (90 + rand(k * 3.1) * 120) * (rand(k * 7.7) > 0.5 ? 1 : -1);
-      const vy = (70 + rand(k * 5.3) * 110) * (rand(k * 2.9) > 0.5 ? 1 : -1);
-      const qx = tri(rand(k * 1.7) * 600 + vx * t, W - 16);
-      const qy = tri(rand(k * 4.1) * 600 + vy * t, Hh - 16);
-      return {x: bx0 + 8 + qx.u, y: by0 + 8 + qy.u, ux: qx.u, uy: qy.u, k};
-    });
-    // foton: paket gelombang kecil melaju ke dinding kanan lalu memantul (siklus 3 dtk)
-    const ph = ((t / 3) % 1 + 1) % 1;
-    const fx = ph < 0.5 ? bx0 + 40 + ph * 2 * (W - 70) : bx0 + W - 30 - 2 * (ph - 0.5) * (W - 70);
-    const fy = y + 25 + 30 * Math.sin(t * 0.7);
+    // HCl bergetar (gerak lambat): H bergerak 35× lebih jauh daripada Cl; gelombang IR datang dari kiri
+    const s = 22 * Math.cos(2 * Math.PI * 1.2 * t);
+    const xCl = x + 10 - 0.028 * s;
+    const xH = x + 130 + 0.972 * s;
+    const head = x - 40;
+    const wave = Array.from({length: 48}, (_, k) => {
+      const X = x - 230 + ((head - (x - 230)) * k) / 47;
+      const env = Math.min(1, (X - (x - 230)) / 40) * Math.min(1, (head - X) / 30 + 0.2);
+      return `${k ? 'L' : 'M'}${X.toFixed(1)},${(y + 16 * env * Math.sin((X - x) * 0.07 - t * 8)).toFixed(1)}`;
+    }).join(' ');
     return (
       <g>
         <Glow x={x} y={y} r={170} color="spr" opacity={0.25 + 0.3 * act} />
-        <rect x={bx0} y={by0} width={W} height={Hh} rx={10} fill="rgba(183,125,255,0.05)" stroke="#c9d3ee" strokeOpacity={0.7} strokeWidth={3} />
-        {mol.map((m) => {
-          const fl = Math.max(0, 1 - m.ux / 14) + Math.max(0, 1 - (W - 16 - m.ux) / 14);
-          const fy2 = Math.max(0, 1 - m.uy / 14) + Math.max(0, 1 - (Hh - 16 - m.uy) / 14);
-          const wx = m.ux < (W - 16) / 2 ? bx0 : bx0 + W;
-          const wy = m.uy < (Hh - 16) / 2 ? by0 : by0 + Hh;
-          return (
-            <g key={m.k}>
-              {fl > 0.01 ? <circle cx={wx} cy={m.y} r={22} fill="url(#soft-press)" opacity={Math.min(1, fl)} /> : null}
-              {fy2 > 0.01 ? <circle cx={m.x} cy={wy} r={22} fill="url(#soft-press)" opacity={Math.min(1, fy2)} /> : null}
-              <circle cx={m.x} cy={m.y} r={7} fill={m.k % 3 === 0 ? '#ff5a6e' : '#4d7dff'} />
-              <circle cx={m.x - 2} cy={m.y - 2} r={2.4} fill="#fff" opacity={0.7} />
-            </g>
-          );
-        })}
-        <path
-          d={Array.from({length: 13}, (_, k) => {
-            const xx = fx - 30 + k * 5;
-            const env = Math.sin((Math.PI * k) / 12);
-            return `${k ? 'L' : 'M'}${xx.toFixed(1)},${(fy + 9 * env * Math.sin(k * 1.6 - t * 18)).toFixed(1)}`;
-          }).join(' ')}
-          fill="none"
-          stroke={C.gold}
-          strokeWidth={3}
-          strokeLinecap="round"
-        />
-        <circle cx={fx} cy={fy} r={16} fill="url(#soft-gold)" />
+        <path d={wave} fill="none" stroke={C.heat} strokeOpacity={0.25} strokeWidth={12} />
+        <path d={wave} fill="none" stroke={C.heat} strokeWidth={3.5} strokeLinecap="round" />
+        <circle cx={xCl} cy={y} r={70 + 8 * Math.sin(t * 7.5)} fill="url(#soft-heat)" opacity={0.6} />
+        <Spring xa={xCl + 38} xb={xH - 24} y={y} coils={4} amp={9} color={C.spr} width={4} />
+        <circle cx={xCl} cy={y} r={42} fill="#5fdc7a" stroke="#bff5c9" strokeOpacity={0.6} strokeWidth={2} />
+        <circle cx={xCl - 13} cy={y - 14} r={9} fill="#fff" opacity={0.4} />
+        <circle cx={xH} cy={y} r={26} fill="#e6ebf8" stroke="#fff" strokeWidth={2} />
+        <circle cx={xH - 8} cy={y - 8} r={6} fill="#fff" />
+        <text x={xCl} y={y + 2} textAnchor="middle" dominantBaseline="central" fontFamily={FONT.head} fontWeight={700} fontSize={26} fill="#0b2a16">
+          Cl
+        </text>
+        <text x={xH} y={y + 2} textAnchor="middle" dominantBaseline="central" fontFamily={FONT.head} fontWeight={700} fontSize={22} fill="#1c2340">
+          H
+        </text>
+        <text x={x + 60} y={y + 78} textAnchor="middle" fontFamily={FONT.mono} fontSize={20} fill={C.heat} opacity={0.85}>
+          gerak lambat · IR
+        </text>
       </g>
     );
   }
-  // roket naik: gas buang dihitung di kerangka lab, bintang mengalir turun (kamera mengikuti roket)
-  const rx = x;
-  const ry = y + 10 + 6 * Math.sin(t * 1.1);
-  const V = 120; // laju roket (px/s, dalam kerangka bintang)
-  const U = 160; // laju gas relatif
+  // jam berdetak + gedung tinggi bergoyang dengan bandul peredam
+  const k = t;
+  const n = Math.floor(k);
+  const f = Math.min(1, (k - n) / 0.14);
+  const ang = ((n + f * f * (3 - 2 * f)) * 6 * Math.PI) / 180;
+  const cx0 = x - 110;
+  const cy0 = y - 6;
+  const om = (2 * Math.PI) / 2.6;
+  const sway = 7 * Math.sin(om * t);
+  const ball = -16 * Math.sin(om * t - 0.4);
+  const gx = x + 110;
+  const gTop = y - 120;
+  const gBot = y + 82;
   return (
     <g>
       <Glow x={x} y={y} r={170} color="work" opacity={0.25 + 0.3 * act} />
-      {Array.from({length: 16}, (_, k) => {
-        const sx = x - 190 + rand(k * 2.3) * 380;
-        const yy = y - 110 + (((rand(k * 5.1) * 230 + V * 0.6 * t * (0.5 + rand(k))) % 230) + 230) % 230;
-        return <line key={k} x1={sx} y1={yy} x2={sx} y2={yy - 6 - 10 * rand(k)} stroke="#dfe8ff" strokeOpacity={0.5} strokeWidth={1.6} strokeLinecap="round" />;
+      <circle cx={cx0} cy={cy0} r={74} fill="#0e1736" stroke={C.work} strokeOpacity={0.8} strokeWidth={4} />
+      {Array.from({length: 12}, (_, j) => {
+        const a = (j / 12) * Math.PI * 2;
+        return <line key={j} x1={cx0 + 60 * Math.sin(a)} y1={cy0 - 60 * Math.cos(a)} x2={cx0 + 68 * Math.sin(a)} y2={cy0 - 68 * Math.cos(a)} stroke={C.ink} strokeOpacity={0.7} strokeWidth={j % 3 === 0 ? 4 : 2} />;
       })}
-      {Array.from({length: 14}, (_, k) => {
-        const emit = Math.floor(t / 0.07) * 0.07 - k * 0.07;
-        const age = t - emit;
-        const life = age / 0.38;
-        if (life >= 1 || life < 0) return null;
-        const spread = (rand(Math.round(emit / 0.07) * 1.3) - 0.5) * 60;
-        // kamera ikut roket: gas bergerak ke bawah dengan laju U relatif roket
-        const gy = ry + 62 + U * age;
-        const gx = rx + spread * age;
-        return <circle key={k} cx={gx} cy={gy} r={4 + 16 * life} fill={life < 0.3 ? 'url(#soft-gold)' : 'url(#soft-kin)'} opacity={Math.min(1, life * 10) * (1 - life)} />;
+      <line x1={cx0} y1={cy0} x2={cx0 + 34 * Math.sin(2.1 + t * 0.02)} y2={cy0 - 34 * Math.cos(2.1 + t * 0.02)} stroke={C.ink} strokeWidth={5} strokeLinecap="round" />
+      <line x1={cx0} y1={cy0} x2={cx0 + 58 * Math.sin(ang)} y2={cy0 - 58 * Math.cos(ang)} stroke={C.work} strokeWidth={3} strokeLinecap="round" />
+      <circle cx={cx0} cy={cy0} r={5} fill={C.ink} />
+      <Ripple x={cx0} y={cy0} p={(k - n) / 0.6} r={110} color="work" rings={1} width={2} />
+      {/* gedung (miring halus) */}
+      <path d={`M${gx - 38},${gBot} L${gx - 30 + sway},${gTop} L${gx + 30 + sway},${gTop} L${gx + 38},${gBot} Z`} fill="#16224a" stroke="#7d89b5" strokeWidth={2.5} />
+      {Array.from({length: 7}, (_, j) => {
+        const yy = gTop + 22 + j * 24;
+        const sh = sway * (1 - (yy - gTop) / (gBot - gTop));
+        return <line key={j} x1={gx - 22 + sh} y1={yy} x2={gx + 22 + sh} y2={yy} stroke={C.cyan} strokeOpacity={0.35 + 0.25 * Math.sin(t * 2 + j)} strokeWidth={3} strokeDasharray="7 5" />;
       })}
-      <g transform={`translate(${rx} ${ry})`}>
-        <path d={`M-9,50 Q0,${78 + 10 * Math.sin(t * 29)} 9,50 Z`} fill={C.kin} />
-        <path d="M-5,50 Q0,66 5,50 Z" fill="#fff4d0" />
-        <path d="M-14,26 L-30,52 L-14,44 Z M14,26 L30,52 L14,44 Z" fill={C.heat} />
-        <path d="M-15,48 L-15,-30 Q-14,-62 0,-78 Q14,-62 15,-30 L15,48 Z" fill="#dfe6f8" />
-        <path d="M-15,-30 Q-14,-62 0,-78 Q14,-62 15,-30 Z" fill={C.heat} />
-        <circle cx={0} cy={-10} r={7} fill="#16224a" stroke={C.cyan} strokeWidth={2.5} />
-      </g>
-      <Arrow x1={rx + 52} y1={ry + 20} x2={rx + 52} y2={ry - 60} color="spr" width={6} pulse={false} />
-      <Arrow x1={rx - 52} y1={ry + 20} x2={rx - 52} y2={ry + 80} color="spr" width={6} pulse={false} opacity={0.8} />
+      <line x1={gx + sway} y1={gTop + 6} x2={gx + sway + ball} y2={gTop + 34} stroke="#c9d3ee" strokeWidth={2} />
+      <circle cx={gx + sway + ball} cy={gTop + 38} r={11} fill={C.gold} stroke="#fff3c4" strokeWidth={1.5} />
+      <path d={`M${gx - 50},${gBot} L${gx + 50},${gBot}`} stroke="#7d89b5" strokeWidth={3} />
     </g>
   );
 };
@@ -184,28 +152,31 @@ export const Roadmap: React.FC = () => {
   const loop = ramp(t, cue(3) + 1.6, cue(3) + 2.6);
   const ghost = win(t, 0.4, cue(3) + 0.6, 0.8, 0.8);
   const itemAt = (i: number, k: number) => wordOf(i + 1, KEYS[i][k]) - 0.15;
-  const imp = ramp(t, wordOf(0, 'impuls') - 0.2, wordOf(0, 'impuls') + 0.6);
+  const imp = ramp(t, wordOf(0, 'osilasi') - 0.2, wordOf(0, 'osilasi') + 0.6);
+  const three = ramp(t, wordOf(0, 'tiga') - 0.2, wordOf(0, 'tiga') + 0.6);
 
   return (
     <AbsoluteFill>
       <div style={{position: 'absolute', left: 0, right: 0, top: 96, textAlign: 'center', fontFamily: FONT.head, fontSize: 50, fontWeight: 700, color: C.ink, opacity: head, translate: `0px ${(1 - head) * 14}px`}}>
-        Peta perjalanan: <span style={{color: C.spr}}>momentum</span> <span style={{opacity: 0.35 + 0.65 * imp}}>&amp;</span> <span style={{color: C.work, opacity: 0.35 + 0.65 * imp}}>impuls</span>
+        Peta perjalanan: <span style={{color: C.press, opacity: 0.35 + 0.65 * imp}}>osilasi</span> <span style={{color: C.muted, opacity: 0.35 + 0.65 * three}}>dalam tiga bagian</span>
       </div>
       <Stage>
-        <Motes x={960} y={520} rx={900} ry={340} n={36} color="spr" opacity={0.4} seed={11} />
-        {/* keping samar di latar yang meluncur dan sesekali bersinggungan */}
-        {[250, 520, 790].map((y, k) => {
-          const L = 2000;
-          const q1 = tri(k * 500 + 70 * t, L);
-          const q2 = tri(k * 500 + 900 - 50 * t, L);
-          return (
-            <g key={k} opacity={0.35 * head}>
-              {[q1, q2].map((q, j) => (
-                <circle key={j} cx={-40 + q.u} cy={y + 18 * Math.sin(t * 0.4 + k + j)} r={9} fill="none" stroke="#bda6ff" strokeOpacity={0.5} strokeWidth={2} />
-              ))}
-            </g>
-          );
-        })}
+        <Motes x={960} y={520} rx={900} ry={340} n={36} color="gold" opacity={0.4} seed={11} />
+        {/* gelombang kosinus samar di latar yang terus merambat */}
+        {[250, 520, 790].map((y, k) => (
+          <path
+            key={k}
+            d={Array.from({length: 49}, (_, j) => {
+              const X = -20 + j * 41;
+              return `${j ? 'L' : 'M'}${X},${(y + 22 * Math.cos(X * 0.008 * (1 + 0.3 * k) - t * (0.9 + 0.25 * k) + k)).toFixed(1)}`;
+            }).join(' ')}
+            fill="none"
+            stroke={k === 1 ? C.gold : C.press}
+            strokeOpacity={0.16}
+            strokeWidth={2}
+            opacity={head}
+          />
+        ))}
         {PARTS.map((p, i) => (
           <rect
             key={`gh${i}`}
@@ -280,7 +251,7 @@ export const Roadmap: React.FC = () => {
               {p.items.map((it, k) => {
                 const q = ramp(t, itemAt(i, k), itemAt(i, k) + 0.6);
                 return (
-                  <div key={it} style={{fontSize: i === 0 ? 26 : 28, color: C.muted, lineHeight: i === 0 ? 1.46 : 1.7, opacity: q, translate: `${(1 - q) * 14}px 0px`, whiteSpace: 'nowrap'}}>
+                  <div key={it} style={{fontSize: i === 0 ? 24 : 28, color: C.muted, lineHeight: i === 0 ? 1.36 : 1.7, opacity: q, translate: `${(1 - q) * 14}px 0px`, whiteSpace: 'nowrap'}}>
                     <span style={{color: p.color, marginRight: 8}}>—</span>
                     {it}
                   </div>
