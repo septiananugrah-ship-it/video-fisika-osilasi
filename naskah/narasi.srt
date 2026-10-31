@@ -1,0 +1,359 @@
+1
+00:00:01,600 --> 00:00:08,006
+Tarik sebuah pegas, lalu lepaskan. Ia bergerak bolak-balik, lagi dan lagi.
+
+2
+00:00:08,006 --> 00:00:14,943
+Sebuah bandul berayun dengan irama yang hampir tidak berubah, cukup teratur untuk menjadi jam.
+
+3
+00:00:14,943 --> 00:00:21,604
+Dan di dalam setiap molekul, atom-atom bergetar puluhan triliun kali setiap detik.
+
+4
+00:00:21,604 --> 00:00:25,611
+Pegas, bandul, dan molekul punya pola gerak yang sama:
+
+5
+00:00:25,611 --> 00:00:27,366
+osilasi.
+
+6
+00:00:27,366 --> 00:00:36,679
+Memahami osilasi adalah langkah pertama untuk memahami getaran molekul, cahaya inframerah, bahkan dunia kuantum.
+
+7
+00:00:46,667 --> 00:00:50,952
+Video ini membahas osilasi dalam tiga bagian.
+
+8
+00:00:50,952 --> 00:01:00,730
+Bagian pertama, konsep: gaya pemulih, gerak harmonik sederhana, periode, energi, bandul, redaman, dan resonansi.
+
+9
+00:01:00,730 --> 00:01:10,852
+Bagian kedua, osilasi di dunia kimia: molekul sebagai pegas, spektrum inframerah, efek isotop, dan jembatan ke kuantum.
+
+10
+00:01:10,852 --> 00:01:18,044
+Bagian ketiga, penerapan: jam, peredam kendaraan, dan peredam gedung pencakar langit.
+
+11
+00:01:20,633 --> 00:01:29,589
+Setiap osilasi punya satu syarat: ada posisi setimbang, dan ada gaya yang selalu menarik benda kembali ke sana.
+
+12
+00:01:29,589 --> 00:01:32,553
+Gaya ini disebut gaya pemulih.
+
+13
+00:01:32,553 --> 00:01:40,588
+Pada pegas, gaya pemulih sebanding dengan simpangan: F sama dengan minus k x. Inilah hukum Hooke.
+
+14
+00:01:40,588 --> 00:01:48,870
+Tanda minus berarti gaya selalu berlawanan arah dengan simpangan. Ditarik ke kanan, pegas menarik ke kiri.
+
+15
+00:01:48,870 --> 00:01:56,196
+Tetapi saat benda tiba di titik setimbang, gayanya nol, sedangkan kecepatannya justru paling besar.
+
+16
+00:01:56,196 --> 00:02:05,143
+Benda kebablasan melewati titik setimbang, lalu ditarik kembali dari sisi lain. Itulah sebabnya ia bolak-balik.
+
+17
+00:02:07,733 --> 00:02:14,294
+Bila gaya pemulih sebanding dengan simpangan, geraknya disebut gerak harmonik sederhana.
+
+18
+00:02:14,294 --> 00:02:21,231
+Bayangkan sebuah titik berputar beraturan pada lingkaran, lalu lihat bayangannya dari samping.
+
+19
+00:02:21,231 --> 00:02:26,271
+Bayangan itu bergerak bolak-balik persis seperti benda pada pegas.
+
+20
+00:02:26,271 --> 00:02:33,140
+Karena itu simpangannya mengikuti fungsi kosinus: x sama dengan A kosinus omega t.
+
+21
+00:02:33,140 --> 00:02:41,810
+A adalah amplitudo, simpangan terjauh. Omega adalah frekuensi sudut, seberapa cepat titik itu berputar.
+
+22
+00:02:41,810 --> 00:02:46,006
+Satu putaran penuh sama dengan satu getaran penuh.
+
+23
+00:02:48,600 --> 00:02:57,847
+Waktu untuk satu getaran penuh disebut periode, T. Banyaknya getaran per detik disebut frekuensi, f, satu per T.
+
+24
+00:02:57,847 --> 00:03:04,985
+Untuk pegas, omega sama dengan akar k per m, sehingga periodenya dua pi akar m per k.
+
+25
+00:03:04,985 --> 00:03:11,368
+Pegas yang lebih kaku bergetar lebih cepat. Beban yang lebih berat bergetar lebih lambat.
+
+26
+00:03:11,368 --> 00:03:22,022
+Beban setengah kilogram pada pegas lima puluh newton per meter: omega sepuluh radian per detik, periodenya sekitar nol koma enam tiga detik.
+
+27
+00:03:22,022 --> 00:03:27,639
+Massanya dijadikan empat kali, periodenya hanya menjadi dua kali.
+
+28
+00:03:27,639 --> 00:03:36,151
+Yang mengejutkan: periode tidak bergantung pada amplitudo. Ditarik jauh atau dekat, iramanya tetap sama.
+
+29
+00:03:38,767 --> 00:03:42,686
+Selama bergetar, energi terus berpindah bentuk.
+
+30
+00:03:42,686 --> 00:03:51,087
+Di simpangan terjauh, benda diam sesaat: semua energinya energi potensial pegas, setengah k A kuadrat.
+
+31
+00:03:51,087 --> 00:03:57,212
+Di titik setimbang, pegas tidak teregang: semua energinya energi kinetik.
+
+32
+00:03:57,212 --> 00:04:06,803
+Dengan amplitudo sepuluh sentimeter, energi totalnya nol koma dua lima joule, dan kecepatan terbesarnya satu meter per detik.
+
+33
+00:04:06,803 --> 00:04:12,820
+Tanpa gesekan, energi total itu tetap. Yang berubah hanya pembagiannya.
+
+34
+00:04:12,820 --> 00:04:24,609
+Grafik energi potensialnya berbentuk mangkuk parabola, dan benda berayun di dalam mangkuk itu. Ingat mangkuk ini, kita akan bertemu lagi di dunia kuantum.
+
+35
+00:04:27,200 --> 00:04:34,338
+Bandul juga berosilasi. Gaya pemulihnya adalah komponen gravitasi yang menyinggung lintasan.
+
+36
+00:04:34,338 --> 00:04:41,664
+Untuk simpangan kecil, geraknya hampir harmonik sederhana, dengan periode dua pi akar L per g.
+
+37
+00:04:41,664 --> 00:04:48,802
+Periode bandul tidak bergantung pada massa beban. Bola besi dan bola kayu berayun seirama.
+
+38
+00:04:48,802 --> 00:04:54,408
+Bandul sepanjang satu meter berayun dengan periode hampir tepat dua detik.
+
+39
+00:04:54,408 --> 00:05:02,855
+Konon Galileo memperhatikan lampu gantung gereja yang berayun, dan mengukur iramanya dengan denyut nadinya sendiri.
+
+40
+00:05:02,855 --> 00:05:11,991
+Tetapi bila simpangannya besar, periodenya mulai bertambah. Rumus sederhana itu hanya berlaku untuk ayunan kecil.
+
+41
+00:05:14,600 --> 00:05:24,013
+Di dunia nyata, ayunan tidak bergerak selamanya. Gesekan dan hambatan udara mengambil energinya sedikit demi sedikit.
+
+42
+00:05:24,013 --> 00:05:30,785
+Amplitudonya mengecil, menyusut secara eksponensial. Inilah osilasi teredam.
+
+43
+00:05:30,785 --> 00:05:36,779
+Bila redamannya kuat, benda kembali ke titik setimbang tanpa sempat bolak-balik.
+
+44
+00:05:36,779 --> 00:05:45,149
+Redaman yang paling pas, disebut redaman kritis, membawa benda kembali ke setimbang secepat mungkin tanpa kebablasan.
+
+45
+00:05:47,733 --> 00:05:54,116
+Sekarang dorong osilator itu secara berkala. Ini disebut osilasi paksa.
+
+46
+00:05:54,116 --> 00:05:59,545
+Setiap osilator punya frekuensi alami, irama yang ia sukai.
+
+47
+00:05:59,545 --> 00:06:10,479
+Bila dorongan datang tepat pada frekuensi alami itu, setiap dorongan menambah energi, dan amplitudonya membesar terus. Inilah resonansi.
+
+48
+00:06:10,479 --> 00:06:17,914
+Seperti mendorong anak di ayunan: dorongan kecil pada saat yang tepat membuat ayunan makin tinggi.
+
+49
+00:06:17,914 --> 00:06:25,429
+Bila dorongannya tidak seirama, sebagian dorongan justru melawan, dan ayunan hampir tidak bergerak.
+
+50
+00:06:25,429 --> 00:06:37,206
+Resonansi adalah cara paling efisien untuk memindahkan energi ke sebuah osilator. Ingat ini, karena molekul menyerap cahaya dengan cara yang sama.
+
+51
+00:06:39,800 --> 00:06:50,911
+Ikatan kimia berperilaku seperti pegas. Dua atom punya jarak setimbang, dan ikatan menarik keduanya kembali bila diregangkan atau ditekan.
+
+52
+00:06:50,911 --> 00:06:57,083
+Molekul hidrogen klorida bisa dibayangkan sebagai dua bola yang dihubungkan pegas.
+
+53
+00:06:57,083 --> 00:07:06,039
+Karena kedua atom sama-sama bergerak, massanya diganti massa tereduksi: m satu kali m dua dibagi jumlahnya.
+
+54
+00:07:06,039 --> 00:07:11,845
+Atom klor jauh lebih berat, jadi yang paling banyak bergerak adalah atom hidrogen.
+
+55
+00:07:11,845 --> 00:07:22,467
+Dengan tetapan gaya ikatan sekitar lima ratus newton per meter, molekul ini bergetar hampir sembilan kali sepuluh pangkat tiga belas kali per detik.
+
+56
+00:07:25,067 --> 00:07:31,427
+Frekuensi getaran molekul itu ternyata sama dengan frekuensi cahaya inframerah.
+
+57
+00:07:31,427 --> 00:07:40,383
+Bila cahaya inframerah dengan frekuensi yang pas mengenai molekul, terjadilah resonansi: molekul menyerap energinya.
+
+58
+00:07:40,383 --> 00:07:51,849
+Hidrogen klorida menyerap paling kuat di sekitar dua ribu delapan ratus delapan puluh enam per sentimeter, panjang gelombang sekitar tiga koma lima mikrometer.
+
+59
+00:07:51,849 --> 00:08:00,862
+Setiap jenis ikatan punya tetapan gaya dan massa yang berbeda, jadi setiap ikatan menyerap pada frekuensinya sendiri.
+
+60
+00:08:00,862 --> 00:08:08,843
+Itulah sebabnya spektrum inframerah bisa dipakai untuk mengenali gugus fungsi, seperti sidik jari molekul.
+
+61
+00:08:11,433 --> 00:08:17,805
+Ganti atom hidrogen dengan deuterium, isotop yang massanya dua kali lebih besar.
+
+62
+00:08:17,805 --> 00:08:24,388
+Ikatannya tetap sama, tetapan gayanya tidak berubah. Yang berubah hanya massanya.
+
+63
+00:08:24,388 --> 00:08:33,413
+Massa tereduksi naik hampir dua kali, sehingga frekuensinya turun sekitar akar dua, kira-kira satu koma empat kali.
+
+64
+00:08:33,413 --> 00:08:42,992
+Serapan deuterium klorida bergeser ke sekitar dua ribu sembilan puluh satu per sentimeter, persis seperti ramalan rumus pegas.
+
+65
+00:08:42,992 --> 00:08:48,320
+Model pegas sederhana ini ternyata bekerja sampai ke skala molekul.
+
+66
+00:08:50,933 --> 00:08:55,973
+Tetapi ada satu hal yang tidak bisa dijelaskan model pegas klasik.
+
+67
+00:08:55,973 --> 00:09:01,601
+Pegas klasik boleh bergetar dengan energi berapa saja. Molekul tidak.
+
+68
+00:09:01,601 --> 00:09:14,553
+Energi getaran molekul hanya boleh bernilai tertentu: v ditambah setengah, dikali h nu. Tingkat-tingkatnya berjarak sama, seperti anak tangga di dalam mangkuk parabola tadi.
+
+69
+00:09:14,553 --> 00:09:23,789
+Bahkan pada tingkat paling rendah, molekul tidak pernah benar-benar diam. Ia masih menyimpan energi titik nol, setengah h nu.
+
+70
+00:09:23,789 --> 00:09:35,067
+Satu anak tangga getaran hidrogen klorida sekitar empat belas kali energi termal pada suhu kamar, jadi hampir semua molekul berada di tingkat paling bawah.
+
+71
+00:09:35,067 --> 00:09:44,380
+Osilator harmonik inilah salah satu model terpenting dalam kimia kuantum. Dan semuanya dimulai dari pegas sederhana.
+
+72
+00:09:46,967 --> 00:09:54,470
+Karena periodenya tidak bergantung pada amplitudo, osilator adalah pengukur waktu yang ideal.
+
+73
+00:09:54,470 --> 00:10:03,295
+Jam bandul memakai ayunan bandul, dan mekanismenya memberi dorongan kecil setiap ayunan untuk mengganti energi yang hilang.
+
+74
+00:10:03,295 --> 00:10:13,429
+Jam tangan modern memakai kristal kuarsa kecil berbentuk garpu tala yang bergetar tiga puluh dua ribu tujuh ratus enam puluh delapan kali per detik.
+
+75
+00:10:13,429 --> 00:10:24,052
+Angka itu dua pangkat lima belas, sehingga rangkaian elektronik cukup membaginya dua sebanyak lima belas kali untuk mendapat tepat satu detik.
+
+76
+00:10:26,667 --> 00:10:32,272
+Mobil bertumpu pada pegas agar guncangan jalan tidak langsung sampai ke penumpang.
+
+77
+00:10:32,272 --> 00:10:39,010
+Tetapi pegas saja membuat mobil terus berayun naik-turun setelah melewati polisi tidur.
+
+78
+00:10:39,010 --> 00:10:47,646
+Karena itu setiap pegas dipasangkan dengan peredam kejut berisi oli, yang mengubah energi ayunan menjadi panas.
+
+79
+00:10:47,646 --> 00:10:55,758
+Peredam dirancang mendekati redaman kritis: mobil kembali datar dengan cepat, tanpa memantul berkali-kali.
+
+80
+00:10:58,367 --> 00:11:04,738
+Gedung tinggi juga punya frekuensi alami, dan angin kencang dapat membuatnya bergoyang.
+
+81
+00:11:04,738 --> 00:11:11,853
+Di puncak gedung Taipei seratus satu tergantung bola baja seberat sekitar enam ratus enam puluh ton.
+
+82
+00:11:11,853 --> 00:11:17,648
+Bandul raksasa ini disetel agar frekuensinya sama dengan frekuensi gedung.
+
+83
+00:11:17,648 --> 00:11:27,238
+Saat gedung bergoyang, bandul berayun berlawanan arah dan menyerap energi goyangan itu, lalu peredamnya mengubahnya menjadi panas.
+
+84
+00:11:27,238 --> 00:11:33,510
+Resonansi yang biasanya berbahaya justru dipakai untuk melawan dirinya sendiri.
+
+85
+00:11:35,900 --> 00:11:37,155
+Mari rangkum.
+
+86
+00:11:37,155 --> 00:11:43,892
+Osilasi terjadi bila ada gaya pemulih yang menarik benda kembali ke posisi setimbang.
+
+87
+00:11:43,892 --> 00:11:52,917
+Bila gaya itu sebanding dengan simpangan, geraknya harmonik sederhana, dengan periode yang tidak bergantung pada amplitudo.
+
+88
+00:11:52,917 --> 00:12:02,330
+Energi terus berpindah antara energi kinetik dan potensial. Redaman mengambilnya, resonansi menambahnya paling efisien.
+
+89
+00:12:02,330 --> 00:12:11,166
+Molekul bergetar seperti pegas, menyerap cahaya inframerah lewat resonansi, dan energi getarannya terkuantisasi.
+
+90
+00:12:11,166 --> 00:12:20,433
+Jadi, setiap kali melihat sesuatu bergetar, tanyakan: apa gaya pemulihnya, dan berapa frekuensi alaminya?
